@@ -7,6 +7,12 @@ import android.support.v7.app.AppCompatActivity
 import com.epam.fragmentsclicker.fragments.ClickButtonFragment
 import com.epam.fragmentsclicker.fragments.ClickTextFragment
 
+/**
+ * Activity which manipulates on [ClickButtonFragment] and [ClickTextFragment]
+ *
+ * @author Vlad Korotkevich
+ */
+
 class MainActivity : AppCompatActivity(), ClickButtonFragment.ActionListener {
 
     private var clicks = 0

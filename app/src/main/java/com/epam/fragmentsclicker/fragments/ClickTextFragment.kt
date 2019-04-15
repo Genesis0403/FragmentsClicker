@@ -8,6 +8,12 @@ import android.view.ViewGroup
 import com.epam.fragmentsclicker.R
 import kotlinx.android.synthetic.main.click_text_fragment.*
 
+/**
+ * Fragment which contatins textView [clickTextView]
+ *
+ * @author Vlad Korotkevich
+ */
+
 class ClickTextFragment : Fragment() {
 
     fun updateTextView(amount: String) {

@@ -10,6 +10,13 @@ import android.widget.Toast
 import com.epam.fragmentsclicker.R
 import kotlinx.android.synthetic.main.click_button_fragment.*
 
+/**
+ * Fragment which contains button [clickButton]
+ * and allows to communicate witch activity with [ActionListener]
+ *
+ * @author Vlad Korotkevich
+ */
+
 class ClickButtonFragment : Fragment() {
 
     interface ActionListener {
