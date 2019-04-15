@@ -19,16 +19,16 @@ class MainActivity : AppCompatActivity(), ClickButtonFragment.ActionListener {
     }
 
     private fun resolveFragments() {
-        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+        if (resources.configuration.orientation == PORTRAIT) {
             updatePortrait(fragment = ClickButtonFragment())
         } else {
-            updateLandscape()
+            //updateLandscape()
         }
     }
 
     override fun onButtonClick() {
         ++clicks
-        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+        if (resources.configuration.orientation == PORTRAIT) {
             val textFragment = ClickTextFragment()
             updatePortrait(backStack = true, pendingTransaction = true, fragment = textFragment)
             textFragment.updateTextView(clicks.toString())
@@ -61,7 +61,8 @@ class MainActivity : AppCompatActivity(), ClickButtonFragment.ActionListener {
     }
 
     private companion object {
-        private const val CLICKS_AMOUNT = "amount"
+        private const val CLICKS_AMOUNT = "clickAmount"
+        private const val PORTRAIT = Configuration.ORIENTATION_PORTRAIT
     }
 }
 
