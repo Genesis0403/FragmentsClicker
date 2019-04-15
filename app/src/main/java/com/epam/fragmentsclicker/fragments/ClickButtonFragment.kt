@@ -42,4 +42,10 @@ class ClickButtonFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.click_button_fragment, container, false)
     }
+
+    companion object {
+        const val TAG = "ClickButtonFragment"
+        fun newInstance() = ClickButtonFragment()
+    }
+
 }

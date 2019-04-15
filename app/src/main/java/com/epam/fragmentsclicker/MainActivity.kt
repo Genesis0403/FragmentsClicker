@@ -10,28 +10,43 @@ import com.epam.fragmentsclicker.fragments.ClickTextFragment
 class MainActivity : AppCompatActivity(), ClickButtonFragment.ActionListener {
 
     private var clicks = 0
+    private var prevPortraitFragment: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        clicks = savedInstanceState?.getInt(CLICKS_AMOUNT) ?: 0
+        savedInstanceState?.apply {
+            clicks = getInt(CLICKS_AMOUNT)
+            prevPortraitFragment = getString(PREV_FRAGMENT_TAG)
+        }
         resolveFragments()
     }
 
     private fun resolveFragments() {
-        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            updatePortrait(fragment = ClickButtonFragment())
+        if (resources.configuration.orientation == PORTRAIT) {
+            if (prevPortraitFragment == null || prevPortraitFragment == ClickButtonFragment.TAG) {
+                updatePortrait(fragment = ClickButtonFragment.newInstance())
+            } else {
+                updatePortrait(fragment = ClickTextFragment.newInstance(clicks))
+            }
+            println(prevPortraitFragment)
         } else {
             updateLandscape()
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (prevPortraitFragment == ClickTextFragment.TAG) {
+            prevPortraitFragment = ClickButtonFragment.TAG
+        }
+    }
+
     override fun onButtonClick() {
         ++clicks
-        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            val textFragment = ClickTextFragment()
-            updatePortrait(backStack = true, pendingTransaction = true, fragment = textFragment)
-            textFragment.updateTextView(clicks.toString())
+        if (resources.configuration.orientation == PORTRAIT) {
+            updatePortrait(backStack = true, fragment = ClickTextFragment.newInstance(clicks))
+            prevPortraitFragment = ClickTextFragment.TAG
         } else {
             updateLandscape()
         }
@@ -58,12 +73,12 @@ class MainActivity : AppCompatActivity(), ClickButtonFragment.ActionListener {
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         outState?.putInt(CLICKS_AMOUNT, clicks)
+        outState?.putString(PREV_FRAGMENT_TAG, prevPortraitFragment)
     }
 
     private companion object {
-        private const val CLICKS_AMOUNT = "amount"
+        private const val CLICKS_AMOUNT = "clickAmount"
+        private const val PREV_FRAGMENT_TAG = "PREV_FRAGMENT_TAG"
+        private const val PORTRAIT = Configuration.ORIENTATION_PORTRAIT
     }
 }
-
-
-
